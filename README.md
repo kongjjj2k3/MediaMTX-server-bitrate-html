@@ -6,7 +6,7 @@
 # Setup in mediamtx.yml
 ### Global settings -> Control API  
 ##### 1. Change api from false to true.
-2. Change apiAllowOrigins from [] to ["*"]
+##### 2. Change apiAllowOrigins from [] to ["*"]
 
 ---
 ### Please download it in [HTML](https://github.com/masarujp2022/MediaMTX-server-bitrate-html/tree/main/HTML) directory.
