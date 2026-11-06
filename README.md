@@ -5,7 +5,7 @@
 ---
 # Setup in mediamtx.yml
 ### Global settings -> Control API  
-1. Change api from false to true.
+##### 1. Change api from false to true.
 2. Change apiAllowOrigins from [] to ["*"]
 
 ---
