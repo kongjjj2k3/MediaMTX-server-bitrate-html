@@ -1,5 +1,5 @@
 # MediaMTX-server-bitrate-html
-
+![GitHub top language](https://img.shields.io/github/languages/top/masarujp2022/MediaMTX-server-bitrate-html?&style=for-the-badge)
 ##### HTML for OBS overlay that shows current bitrate of MediaMTX RTMP & SRT servers.
 
 ---
