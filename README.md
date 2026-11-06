@@ -3,8 +3,8 @@
 ##### HTML for OBS overlay that shows current bitrate of MediaMTX RTMP & SRT servers.
 
 ---
-Setup in mediamtx.yml
-# Global settings -> Control API  
+#Setup in mediamtx.yml
+### Global settings -> Control API  
 1. Change api from false to true
 2. Change apiAllowOrigins from [] to ["*"]
 
