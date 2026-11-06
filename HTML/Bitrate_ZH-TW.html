@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        /* 透明背景，適合 OBS */
+        body {
+            background-color: transparent;
+            margin: 0;
+            padding: 5px;
+            font-family: 'Arial', 'Impact', sans-serif;
+            color: white;
+            text-shadow: 2px 2px 4px black;
+            white-space: nowrap;
+        }
+
+        .display {
+            display: flex;
+            align-items: baseline;
+        }
+
+        .value {
+            font-size: 18px;
+            font-weight: 900;
+            margin-right: 8px;
+            transition: color 0.2s ease;  /* 平滑過渡 */
+        }
+
+        .unit {
+            font-size: 15px;
+            color: #ffffff;
+        }
+
+        /* 無訊號：紅色 */
+        .offline .value {
+            color: #ff6666;
+        }
+
+        /* 測量中：黃色 */
+        .measuring .value {
+            color: yellow;
+        }
+
+        /* 顏色分級 - 正常數值時套用 */
+        .color-orange .value {
+            color: #ff9900;  /* 橙色 */
+        }
+        .color-white .value {
+            color: white;     /* 白色（預設也是白，但明確指定） */
+        }
+        .color-green .value {
+            color: #33ff33;   /* 亮綠色 */
+        }
+    </style>
+</head>
+<body>
+    <div class="display" id="display">
+        <span id="bitrate-value" class="value">--</span>
+        <span id="unit" class="unit">kb/s</span>
+    </div>
+
+    <script>
+        // ========= 使用者設定區 =========
+        const SRT_API_URL = 'http://localhost:9997/v3/srtconns/list';
+        const RTMP_API_URL = 'http://localhost:9997/v3/rtmpconns/list';
+
+        // 單位設定: 'kb/s' 或 'Mbps' (各自獨立)
+        const SRT_UNIT = 'Mbps';      // SRT 顯示單位
+        const RTMP_UNIT = 'Mbps';     // RTMP 顯示單位
+
+        // 優先順序: true = SRT 優先, false = RTMP 優先
+        const PREFER_SRT = true;
+        // ================================
+
+        // ---------- RTMP 計算專用狀態 ----------
+        let rtmpLastBytes = 0;
+        let rtmpLastTime = Date.now();
+
+        // ---------- 目前協定狀態 ----------
+        let srtActive = false;
+        let srtBitrateKbps = 0;
+
+        let rtmpActive = false;
+        let rtmpBitrateKbps = 0;        // 只有當 active 且計算完成時有效
+
+        // ---------- 格式化函式 ----------
+        function formatBitrate(valueKbps, unit) {
+            if (unit === 'Mbps') {
+                return (valueKbps / 1000).toFixed(2);  // 兩位小數
+            } else {
+                return Math.round(valueKbps).toString();
+            }
+        }
+
+        // ---------- 根據 bitrate (kb/s) 決定顏色類別 ----------
+        function getColorClassFromKbps(kbps) {
+            if (kbps < 1000) {
+                return 'color-orange';
+            } else if (kbps < 2000) {
+                return 'color-white';
+            } else {
+                return 'color-green';
+            }
+        }
+
+        // ---------- 更新 SRT 狀態 ----------
+        async function updateSRT() {
+            try {
+                const resp = await fetch(SRT_API_URL);
+                const data = await resp.json();
+
+                const conn = data.items.find(c => c.state === 'publish');
+                if (conn) {
+                    srtActive = true;
+                    srtBitrateKbps = conn.mbpsReceiveRate * 1000;  // 轉為 kb/s
+                } else {
+                    srtActive = false;
+                }
+            } catch (e) {
+                console.error('SRT API 錯誤', e);
+                srtActive = false;
+            }
+        }
+
+        // ---------- 更新 RTMP 狀態（每秒計算）----------
+        async function updateRTMP() {
+            try {
+                const resp = await fetch(RTMP_API_URL);
+                const data = await resp.json();
+
+                const conn = data.items.find(c => c.state === 'publish');
+                if (conn) {
+                    const now = Date.now();
+                    const bytes = conn.bytesReceived;
+
+                    if (rtmpLastBytes > 0) {
+                        const deltaBytes = bytes - rtmpLastBytes;
+                        const deltaSec = (now - rtmpLastTime) / 1000;
+
+                        if (deltaSec > 0 && deltaBytes >= 0) {
+                            rtmpBitrateKbps = (deltaBytes * 8 / 1000) / deltaSec;
+                            rtmpActive = true;
+                        } else {
+                            rtmpActive = false;
+                        }
+                    } else {
+                        rtmpActive = false;   // 第一次收到資料，還無法計算
+                    }
+
+                    rtmpLastBytes = bytes;
+                    rtmpLastTime = now;
+                } else {
+                    rtmpActive = false;
+                    rtmpLastBytes = 0;
+                }
+            } catch (e) {
+                console.error('RTMP API 錯誤', e);
+                rtmpActive = false;
+                rtmpLastBytes = 0;
+            }
+        }
+
+        // ---------- 根據優先順序更新顯示（無協定標籤）----------
+        function updateDisplay() {
+            const valueSpan = document.getElementById('bitrate-value');
+            const unitSpan = document.getElementById('unit');
+            const container = document.getElementById('display');
+
+            // 移除所有狀態類別（包含顏色分級類別）
+            container.classList.remove('offline', 'measuring', 'color-orange', 'color-white', 'color-green');
+
+            // 決定要顯示哪個協定的數據
+            let showSRT = false;
+            let showRTMP = false;
+
+            if (PREFER_SRT) {
+                if (srtActive) {
+                    showSRT = true;
+                } else if (rtmpActive) {
+                    showRTMP = true;
+                }
+            } else {
+                if (rtmpActive) {
+                    showRTMP = true;
+                } else if (srtActive) {
+                    showSRT = true;
+                }
+            }
+
+            // 更新數值與單位
+            if (showSRT) {
+                const displayValue = formatBitrate(srtBitrateKbps, SRT_UNIT);
+                valueSpan.innerText = displayValue;
+                unitSpan.innerText = SRT_UNIT;
+
+                // 根據實際 bitrate (kb/s) 加上顏色分級
+                const colorClass = getColorClassFromKbps(srtBitrateKbps);
+                container.classList.add(colorClass);
+            }
+            else if (showRTMP) {
+                if (rtmpBitrateKbps > 0) {
+                    const displayValue = formatBitrate(rtmpBitrateKbps, RTMP_UNIT);
+                    valueSpan.innerText = displayValue;
+                    unitSpan.innerText = RTMP_UNIT;
+
+                    // 根據實際 bitrate (kb/s) 加上顏色分級
+                    const colorClass = getColorClassFromKbps(rtmpBitrateKbps);
+                    container.classList.add(colorClass);
+                } else {
+                    valueSpan.innerText = '測量中';
+                    unitSpan.innerText = '';
+                    container.classList.add('measuring'); // 黃色
+                }
+            }
+            else {
+                // 兩者都無訊號
+                valueSpan.innerText = '無訊號';
+                unitSpan.innerText = '';
+                container.classList.add('offline'); // 紅色
+            }
+        }
+
+        // ---------- 主循環 ----------
+        async function refreshAll() {
+            await Promise.all([updateSRT(), updateRTMP()]);
+            updateDisplay();
+        }
+
+        refreshAll();
+        setInterval(refreshAll, 1000);
+    </script>
+</body>
+</html>
