@@ -9,5 +9,5 @@
 ##### 2. Change apiAllowOrigins from [] to ["*"]
 
 ---
-### Please download it in [HTML](https://github.com/masarujp2022/MediaMTX-server-bitrate-html/tree/main/HTML) directory.
+### Please download it in [HTML](https://github.com/masarujp2022/MediaMTX-server-bitrate-html/tree/main/HTML) directory or [Release](https://github.com/kongjjj2k3/MediaMTX-server-bitrate-html/releases) page.
 ---
