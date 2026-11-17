@@ -24,7 +24,7 @@ Setup Instructions:
  
 3. MediaMTX  Control API apiAllowOrigins: [] 改成 apiAllowOrigins: ["*"]
 
-4. 將Start_Bitrate_Server.bat 啟動檔，放在 Bitrate.html 同一個資料夾(請將下載的Bitrate_EN.html改名成Bitrate.html)，
+4. 將Start_Bitrate_Server.bat 啟動檔，放在 Bitrate.html 同一個資料夾(請將下載的Bitrate_ZH-TW.html改名成Bitrate.html)，
 雙擊 Start_Bitrate_Server.bat。看到 HTTP Server 啟動後，OBS bitrate overlay就可以使用。
 
 ---
