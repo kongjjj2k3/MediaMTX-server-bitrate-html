@@ -7,15 +7,16 @@
 ---
 Setup Instructions:
 
-Set the OBS bitrate overlay URL to: [http://127.0.0.1:8080/Bitrate.html](http://127.0.0.1:8080/Bitrate.html)
+1.Set the OBS bitrate overlay URL to: [http://127.0.0.1:8080/Bitrate.html](http://127.0.0.1:8080/Bitrate.html)
 
-Enable the MediaMTX Control API by setting api: true.
+2.Enable the MediaMTX Control API by setting api: true.
 
-In the MediaMTX Control API configuration, change apiAllowOrigins: [] to apiAllowOrigins: ["*"].
+3.In the MediaMTX Control API configuration, change apiAllowOrigins: [] to apiAllowOrigins: ["*"].
 
-Place the Start_Bitrate_Server.bat startup file in the same folder as Bitrate.html (please rename the downloaded Bitrate_EN.html to Bitrate.html), then double-click Start_Bitrate_Server.bat. Once you see that the HTTP Server has started, the OBS bitrate overlay is ready to use.
+4.Place the Start_Bitrate_Server.bat startup file in the same folder as Bitrate.html (please rename the downloaded Bitrate_EN.html to Bitrate.html), then double-click Start_Bitrate_Server.bat. Once you see that the HTTP Server has started, the OBS bitrate overlay is ready to use.
 
 <br>
+
 使用設定：
 1. 設定OBS bitrate overlay網址：http://127.0.0.1:8080/Bitrate.html
 2. 修改MediaMTX Control API , api: true
