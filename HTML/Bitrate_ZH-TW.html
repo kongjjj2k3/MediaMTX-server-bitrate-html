@@ -8,7 +8,7 @@
             background-color: transparent;
             margin: 0;
             padding: 5px;
-            font-family: 'Arial', 'Impact', sans-serif;
+            font-family: 'zihunbiantaoti', 'Impact', sans-serif;
             color: white;
             text-shadow: 2px 2px 4px black;
             white-space: nowrap;
@@ -21,7 +21,7 @@
 
         .value {
             font-size: 18px;
-            font-weight: 900;
+            font-weight: 400;
             margin-right: 8px;
             transition: color 0.2s ease;  /* 平滑過渡 */
         }
@@ -75,6 +75,7 @@
         // ---------- RTMP 計算專用狀態 ----------
         let rtmpLastBytes = 0;
         let rtmpLastTime = Date.now();
+        let rtmpHasSample = false;
 
         // ---------- 目前協定狀態 ----------
         let srtActive = false;
@@ -131,9 +132,12 @@
                 const conn = data.items.find(c => c.state === 'publish');
                 if (conn) {
                     const now = Date.now();
-                    const bytes = conn.bytesReceived;
+                    // MediaMTX 新版改用 inboundBytes；bytesReceived 為舊版相容欄位
+                    const rawBytes = conn.inboundBytes ?? conn.bytesReceived;
+                    const bytes = Number(rawBytes);
+                    if (!Number.isFinite(bytes)) throw new Error('RTMP API 缺少 inboundBytes / bytesReceived');
 
-                    if (rtmpLastBytes > 0) {
+                    if (rtmpHasSample) {
                         const deltaBytes = bytes - rtmpLastBytes;
                         const deltaSec = (now - rtmpLastTime) / 1000;
 
@@ -149,14 +153,17 @@
 
                     rtmpLastBytes = bytes;
                     rtmpLastTime = now;
+                    rtmpHasSample = true;
                 } else {
                     rtmpActive = false;
                     rtmpLastBytes = 0;
+                    rtmpHasSample = false;
                 }
             } catch (e) {
                 console.error('RTMP API 錯誤', e);
                 rtmpActive = false;
                 rtmpLastBytes = 0;
+                rtmpHasSample = false;
             }
         }
 

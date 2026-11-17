@@ -21,9 +21,9 @@
 
         .value {
             font-size: 18px;
-            font-weight: 900;
+            font-weight: 600;
             margin-right: 8px;
-            transition: color 0.2s ease;
+            transition: color 0.2s ease;  
         }
 
         .unit {
@@ -75,6 +75,7 @@
         // ---------- RTMP-specific computational state ----------
         let rtmpLastBytes = 0;
         let rtmpLastTime = Date.now();
+        let rtmpHasSample = false;
 
         // ---------- Current Agreement Status ----------
         let srtActive = false;
@@ -117,7 +118,7 @@
                     srtActive = false;
                 }
             } catch (e) {
-                console.error('SRT API 錯誤', e);
+                console.error('SRT API error', e);
                 srtActive = false;
             }
         }
@@ -131,9 +132,12 @@
                 const conn = data.items.find(c => c.state === 'publish');
                 if (conn) {
                     const now = Date.now();
-                    const bytes = conn.bytesReceived;
+                    // MediaMTX new ver. use inboundBytes；bytesReceived for old ver.
+                    const rawBytes = conn.inboundBytes ?? conn.bytesReceived;
+                    const bytes = Number(rawBytes);
+                    if (!Number.isFinite(bytes)) throw new Error('RTMP API don't have inboundBytes / bytesReceived');
 
-                    if (rtmpLastBytes > 0) {
+                    if (rtmpHasSample) {
                         const deltaBytes = bytes - rtmpLastBytes;
                         const deltaSec = (now - rtmpLastTime) / 1000;
 
@@ -149,14 +153,17 @@
 
                     rtmpLastBytes = bytes;
                     rtmpLastTime = now;
+                    rtmpHasSample = true;
                 } else {
                     rtmpActive = false;
                     rtmpLastBytes = 0;
+                    rtmpHasSample = false;
                 }
             } catch (e) {
                 console.error('RTMP API error', e);
                 rtmpActive = false;
                 rtmpLastBytes = 0;
+                rtmpHasSample = false;
             }
         }
 
