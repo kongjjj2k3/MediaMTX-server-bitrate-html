@@ -6,7 +6,7 @@
 
 ---
 使用設定：
-1. OBS bitrate overlay網址：http://127.0.0.1:8080/Bitrate.html
+1. 設定OBS bitrate overlay網址：http://127.0.0.1:8080/Bitrate.html
 2. 修改MediaMTX Control API , api: true
 3. MediaMTX  Control API apiAllowOrigins： [] 改成 apiAllowOrigins: ["*"]
 4. 將Start_Bitrate_Server.bat 啟動檔，放在 Bitrate.html 同一個資料夾(請將下載的Bitrate_EN.html改名成Bitrate.html)，
