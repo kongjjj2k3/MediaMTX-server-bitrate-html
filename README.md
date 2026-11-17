@@ -8,7 +8,7 @@
 使用設定：
 1. OBS bitrate overlay網址：http://127.0.0.1:8080/Bitrate.html
 2. 修改MediaMTX Control API , api: true
-3. MediaMTX apiAllowOrigins：只允許 http://127.0.0.1:8080,將
+3. MediaMTX apiAllowOrigins：只允許 http://127.0.0.1:8080 , 將
 apiAllowOrigins: []
 改成
 apiAllowOrigins:
