@@ -7,6 +7,7 @@
 ---
 Setup Instructions:
 
+Method 1:
 1. Set the OBS bitrate overlay URL to: http://127.0.0.1:8080/Bitrate.html
 
 2. Enable the MediaMTX Control API by setting api: true.
@@ -14,6 +15,22 @@ Setup Instructions:
 3. In the MediaMTX Control API configuration, change apiAllowOrigins: [] to apiAllowOrigins: ["*"]
 
 4. Place the Start_Bitrate_Server.bat startup file in the same folder as Bitrate.html (please rename the downloaded Bitrate_EN.html to Bitrate.html), then double-click Start_Bitrate_Server.bat. Once you see that the HTTP Server has started, the OBS bitrate overlay is ready to use.
+
+Method 2:
+1. Modify the MediaMTX Control API setting: api: true
+
+2. Change apiAllowOrigins: [] in the MediaMTX Control API settings to apiAllowOrigins: ["*"]
+
+3. Download bitrate_server.py and add it to OBS Scripts.
+
+4. Go to OBS Scripts -> Python Settings, select the folder where python.exe is located (e.g., C:/Users/<Username>/AppData/Local/Programs/Python/Python311). Installing Python 3.11 is recommended.
+
+5. Once successful, you will see: Loaded Python Version: 3.11
+
+6. Go back to the bitrate_server.py script settings and select the location of bitrate.html.
+
+7. Set the OBS bitrate overlay URL to: [http://127.0.0.1:8011/Bitrate.html](http://127.0.0.1:8011/Bitrate.html), and click Refresh cache of current page.
+
 
 
 # 使用設定：
