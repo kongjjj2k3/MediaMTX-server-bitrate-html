@@ -28,14 +28,18 @@ Setup Instructions:
 4. 將Start_Bitrate_Server.bat 啟動檔，放在 Bitrate.html 同一個資料夾(請將下載的Bitrate_ZH-TW.html改名成Bitrate.html)， 雙擊 Start_Bitrate_Server.bat。看到 HTTP Server 啟動後，OBS bitrate overlay就可以使用。
 
 方法2：
-1. 下載bitrate_server.py,新增到OBS腳本.
+1. 修改MediaMTX Control API , api: true
+
+2. MediaMTX Control API apiAllowOrigins: [] 改成 apiAllowOrigins: ["*"]
+
+3. 下載bitrate_server.py,新增到OBS腳本.
    
-2. 到OBS腳本->Python設定 選擇Python exe所在資料夾(C:/Users/用戶名/AppData/Local/Programs/Python/Python311),建議安裝Python3.11.
+4. 到OBS腳本->Python設定 選擇Python exe所在資料夾(C:/Users/用戶名/AppData/Local/Programs/Python/Python311),建議安裝Python3.11.
    成功後會見到 載入的Python 版本: 3.11
 
-4. 回到腳本bitrate_server.py, 選擇 bitrate.html所在位置.
+5. 回到腳本bitrate_server.py, 選擇 bitrate.html所在位置.
 
-5. 設定OBS bitrate overlay網址：http://127.0.0.1:8011/Bitrate.html, 並更新一下當前頁面快取.
+6. 設定OBS bitrate overlay網址：http://127.0.0.1:8011/Bitrate.html, 並更新一下當前頁面快取.
 
 ![MediaMTX-server-bitrate-html](pics/2.JPG)
 ![MediaMTX-server-bitrate-html](pics/1.JPG)
