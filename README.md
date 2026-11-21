@@ -34,7 +34,7 @@ Setup Instructions:
 
 3. 下載bitrate_server.py,新增到OBS腳本.
    
-4. 到OBS腳本->Python設定 選擇Python exe所在資料夾(C:/Users/用戶名/AppData/Local/Programs/Python/Python311),建議安裝Python3.11.
+4. 到OBS腳本->Python設定 選擇Python exe所在資料夾(C:/Users/用戶名/AppData/Local/Programs/Python/Python311),建議安裝Python64 3.11.
    成功後會見到 載入的Python 版本: 3.11
 
 5. 回到腳本bitrate_server.py, 選擇 bitrate.html所在位置.
