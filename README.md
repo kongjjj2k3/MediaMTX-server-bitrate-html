@@ -16,8 +16,8 @@ Setup Instructions:
 4. Place the Start_Bitrate_Server.bat startup file in the same folder as Bitrate.html (please rename the downloaded Bitrate_EN.html to Bitrate.html), then double-click Start_Bitrate_Server.bat. Once you see that the HTTP Server has started, the OBS bitrate overlay is ready to use.
 
 
-使用設定：
-
+#使用設定：
+方法1：
 1. 設定OBS bitrate overlay網址：http://127.0.0.1:8080/Bitrate.html
 
 2. 修改MediaMTX Control API , api: true
