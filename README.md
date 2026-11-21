@@ -17,6 +17,7 @@ Setup Instructions:
 
 
 #使用設定：
+
 方法1：
 1. 設定OBS bitrate overlay網址：http://127.0.0.1:8080/Bitrate.html
 
