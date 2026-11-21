@@ -21,7 +21,7 @@ Method 2:
 
 2. Change apiAllowOrigins: [] in the MediaMTX Control API settings to apiAllowOrigins: ["*"]
 
-3. Download bitrate_server.py and add it to OBS Scripts.
+3. Download bitrate_server_EN.py and add it to OBS Scripts.
 
 4. Go to OBS Scripts -> Python Settings, select the folder where python.exe is located (e.g., C:/Users/<Username>/AppData/Local/Programs/Python/Python311). Installing Python 3.11 is recommended.
 
