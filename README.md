@@ -30,11 +30,12 @@ Setup Instructions:
 方法2：
 1. 下載bitrate_server.py,新增到OBS腳本.
    
-2. 到OBS腳本->Python設定 選擇Python exe所在資料夾(C:/Users/用戶名/AppData/Local/Programs/Python/Python311),建議安裝Python3.11.成功後會見到 載入的Python 版本: 3.11
+2. 到OBS腳本->Python設定 選擇Python exe所在資料夾(C:/Users/用戶名/AppData/Local/Programs/Python/Python311),建議安裝Python3.11.
+   成功後會見到 載入的Python 版本: 3.11
 
-3. 回到腳本bitrate_server.py, 選擇 bitrate.html所在位置.
+4. 回到腳本bitrate_server.py, 選擇 bitrate.html所在位置.
 
-4. 設定OBS bitrate overlay網址：http://127.0.0.1:8011/Bitrate.html, 並更新一下當前頁面快取.
+5. 設定OBS bitrate overlay網址：http://127.0.0.1:8011/Bitrate.html, 並更新一下當前頁面快取.
 
 
 
