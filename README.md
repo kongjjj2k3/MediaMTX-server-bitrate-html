@@ -34,7 +34,7 @@ Setup Instructions:
 
 3. 回到腳本bitrate_server.py, 選擇 bitrate.html所在位置.
 
-4. 設定OBS bitrate overlay網址：http://127.0.0.1:8011/Bitrate.html,並更新一下當前頁面快取.
+4. 設定OBS bitrate overlay網址：http://127.0.0.1:8011/Bitrate.html, 並更新一下當前頁面快取.
 
 
 
