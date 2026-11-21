@@ -42,7 +42,7 @@ Setup Instructions:
 6. 設定OBS bitrate overlay網址：http://127.0.0.1:8011/Bitrate.html, 並更新一下當前頁面快取.
 
 ![MediaMTX-server-bitrate-html](pics/2.JPG)
-![MediaMTX-server-bitrate-html](pics/1.JPG)
+![MediaMTX-server-bitrate-html](pics/4.JPG)
 
 
 ---
