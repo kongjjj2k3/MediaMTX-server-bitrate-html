@@ -68,4 +68,4 @@ Method 2:
 
 ## Other projects I have made
 
-[Chat Overlay](https://github.com/kongjjj2k3/Chat-Overlay)
+[Chat Overlay](https://github.com/kongjjj2k3/Chat-Overlay) : An Android Transparent Youtube/Twitch/Kick Chat viewer app for IRL streaming.
