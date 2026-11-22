@@ -66,6 +66,6 @@ Method 2:
 ### Please download it in [HTML](https://github.com/masarujp2022/MediaMTX-server-bitrate-html/tree/main/HTML) directory or [Releases](https://github.com/kongjjj2k3/MediaMTX-server-bitrate-html/releases) page.
 ---
 
-##Other projects I have made
+## Other projects I have made
 
 [Chat Overlay](https://github.com/kongjjj2k3/Chat-Overlay)
